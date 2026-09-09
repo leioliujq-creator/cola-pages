@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OKR 走向觉知之路 · 执行 Dashboard（2026 W1–W36）</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { background:#0f0f14; color:#e0e0e8; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC',sans-serif; line-height:1.55; }
+  .wrap { max-width:1180px; margin:0 auto; padding:36px 22px 80px; }
+  h1 { font-size:26px; color:#fff; font-weight:700; letter-spacing:.3px; }
+  .sub { color:#8b8b98; font-size:13px; margin:6px 0 26px; }
+  .kpis { display:grid; grid-template-columns:repeat(auto-fit,minmax(210px,1fr)); gap:14px; margin-bottom:26px; }
+  .kpi { background:#17171f; border:1px solid #26262f; border-radius:12px; padding:16px 18px; }
+  .kpi .k { font-size:12px; color:#9a9aa6; letter-spacing:.5px; }
+  .kpi .v { font-size:30px; font-weight:700; color:#fff; margin:4px 0 2px; }
+  .kpi .d { font-size:12.5px; color:#8b8b98; }
+  .kpi .up { color:#7bd88f; } .kpi .warn { color:#ffb454; } .kpi .bad { color:#ff7a7a; }
+  .card { background:#17171f; border:1px solid #26262f; border-radius:14px; padding:20px 22px; margin-bottom:18px; }
+  .card h2 { font-size:15px; color:#fff; margin-bottom:4px; display:flex; align-items:center; gap:8px; }
+  .card .hint { font-size:12px; color:#8b8b98; margin-bottom:14px; }
+  .grid2 { display:grid; grid-template-columns:1fr 1fr; gap:18px; }
+  @media (max-width:900px){ .grid2{grid-template-columns:1fr;} }
+  canvas { width:100% !important; }
+  .g-chart { position:relative; height:300px; }
+  .g-chart.sm { height:240px; }
+  table.small { width:100%; border-collapse:collapse; font-size:13px; }
+  table.small td, table.small th { padding:7px 9px; border-bottom:1px solid #23232c; text-align:right; }
+  table.small th { color:#9a9aa6; font-weight:600; text-align:right; }
+  table.small td:first-child, table.small th:first-child { text-align:left; }
+  .pctwrap { background:#23232c; border-radius:5px; height:9px; overflow:hidden; }
+  .pct { height:100%; border-radius:5px; }
+  .verdict { background:#1a1a24; border-left:3px solid #ffb454; border-radius:8px; padding:12px 16px; margin:12px 0; font-size:13.5px; }
+  .verdict b { color:#fff; }
+  .verdict.good { border-left-color:#7bd88f; }
+  .verdict.bad { border-left-color:#ff7a7a; }
+  .todo { background:#1c1c26; border:1px solid #2a2a36; border-radius:10px; padding:14px 18px; margin-top:10px; }
+  .todo h3 { color:#fff; font-size:14px; margin-bottom:8px; }
+  .todo p, .todo li { font-size:13.5px; color:#c9c9d4; }
+  .todo ul { padding-left:18px; }
+  .gantt { margin-top:8px; }
+  .g-line { font-size:11px; color:#9a9aa6; display:flex; }
+  .g-label { width:118px; flex:0 0 118px; padding:7px 4px; }
+  .g-track { position:relative; flex:1; border-bottom:1px dashed #26262f; height:30px; }
+  .g-row .bar { position:absolute; top:7px; height:17px; border-radius:4px; background:#5b7fd4; color:#fff; font-size:10px; line-height:17px; text-align:center; overflow:hidden; white-space:nowrap; text-overflow:ellipsis; padding:0 4px; }
+  .axis { font-size:10px; color:#6a6a78; margin:3px 0 0 118px; position:relative; height:14px; }
+  .axis span { position:absolute; transform:translateX(-50%); }
+  .legend-note { font-size:12px; color:#8b8b98; margin-top:8px; }
+  .footer { color:#5a5a68; font-size:11px; margin-top:30px; text-align:center; }
+  .overview { display:flex; gap:26px; align-items:center; flex-wrap:wrap; }
+  .overview .txt { flex:1.35; min-width:300px; }
+  .overview .txt p { margin:7px 0; font-size:14.5px; line-height:1.7; color:#d6d6e0; }
+  .overview .txt b { color:#fff; }
+  .overview .chart { flex:1; min-width:240px; max-width:340px; position:relative; height:230px; margin:0 auto; }
+  .badge { display:inline-block; padding:1px 8px; border-radius:10px; font-size:11px; margin-right:4px; }
+  .b-green { background:#1d3a2a; color:#7bd88f; } .b-red { background:#3a1d1d; color:#ff8f8f; }
+  .b-grey { background:#23232c; color:#9a9aa6; } .b-blue { background:#1c2740; color:#8ab0ff; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>走向觉知之路 · 执行 Dashboard</h1>
+  <div class="sub">2026-01-01 ~ 09-06（OKR W1–W36）｜数据源：Apple 手记逐日流水（人工复核）｜OKR 计划对照</div>
+
+  <div class="card">
+    <div class="overview">
+      <div class="txt">
+        <h2>半年时间账：一句话版</h2>
+        <p><span class="badge b-green">✓ 冥想</span>完成率约 89%，唯一长期达标项；<span class="badge b-green">✓ 阅读</span>8 本书已全部读完（用户确认）。</p>
+        <p><span class="badge b-red">✗ 白耗</span>看得见的只有 212h（刷手机 201h + wondering 11h），其中一半来自 20 个“爆刷日”。</p>
+        <p><span class="badge b-blue">？ 51%</span>半年有 <b>3013h</b> 没留下可追溯的账目 —— 真正的“白白消耗”大多藏在这里，不是刷手机。</p>
+        <p><span class="badge b-grey">❤ 陪娃</span>256h，是刷手机的 1.3 倍；工作日(65min/天)比周末(56min/天)陪得更多。</p>
+      </div>
+      <div class="chart"><canvas id="cWhere"></canvas></div>
+    </div>
+  </div>
+
+  <div class="kpis">
+    <div class="kpi"><div class="k">冥想总时长</div><div class="v">146.4h</div>
+      <div class="d up">目标 40min/天 → 完成率 <b>89%</b></div></div>
+    <div class="kpi"><div class="k">看书总时长</div><div class="v">41.1h</div>
+      <div class="d up">已读完 <b>8</b> 本（用户确认） · 39/246 天有阅读</div></div>
+    <div class="kpi"><div class="k">运动总时长</div><div class="v">46.2h</div>
+      <div class="d warn">跑步 6/36 次 · 深蹲 1/72 次</div></div>
+    <div class="kpi"><div class="k">自己事</div><div class="v">27.4h</div>
+      <div class="d">无 OKR 目标 · 生活行政层</div></div>
+  </div>
+
+  <div class="kpis">
+    <div class="kpi"><div class="k">工作时间（日记明记）</div><div class="v">369.8h</div>
+      <div class="d">146/246 天有记录 · 日均 90min</div></div>
+    <div class="kpi"><div class="k">耍手机·屏幕娱乐</div><div class="v">200.9h</div>
+      <div class="d warn">110/246 天 · 日均 49min</div></div>
+    <div class="kpi"><div class="k">wondering·发呆</div><div class="v">10.7h</div>
+      <div class="d">12/246 天 · 集中在上半年</div></div>
+    <div class="kpi"><div class="k">三项合计</div><div class="v">581.4h</div>
+      <div class="d up">日均约 <b>142min</b> ≈ 2.4h/天</div></div>
+  </div>
+
+  <div class="kpis">
+    <div class="kpi"><div class="k">陪娃时间（汤圆+樱桃）</div><div class="v">256.4h</div>
+      <div class="d">143/246 天有记录 · 日均 63min</div></div>
+    <div class="kpi"><div class="k">工作日 vs 周末日均</div><div class="v">65 vs 56min</div>
+      <div class="d">工作日略高 · 周末更多交给家人/外出社交</div></div>
+    <div class="kpi"><div class="k">最满的一周</div><div class="v">W35 · 25.7h</div>
+      <div class="d">开学/假期周：接送+陪玩+哄睡全负荷</div></div>
+    <div class="kpi"><div class="k">陪娃 vs 刷手机</div><div class="v">1.3×</div>
+      <div class="d up">陪娃总时长是刷手机的 1.3 倍</div></div>
+  </div>
+
+  <div class="card">
+    <h2>每周变化 · 四类时间堆叠</h2>
+    <div class="hint">一眼看出每周的时间都花在哪：冥想是稳定的基底，看书如沙漠绿洲，运动靠拉伸引体维持。</div>
+    <div class="g-chart"><canvas id="cTrend"></canvas></div>
+  </div>
+
+  <div class="grid2">
+    <div class="card">
+      <h2>冥想 · 实际 vs 目标 280min/周</h2>
+      <div class="hint">灰虚线 = OKR 目标。W13/W20/W31 是峰值周，W8/W25/W32 是塌陷周。</div>
+      <div class="g-chart sm"><canvas id="cMed"></canvas></div>
+    </div>
+    <div class="card">
+      <h2>看书 · 每周分钟</h2>
+      <div class="hint">下方色带 = 当周 P1/O1 计划在读的书。</div>
+      <div class="g-chart sm"><canvas id="cRead"></canvas></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>阅读计划 vs 现实</h2>
+    <div class="hint">横轴 = OKR 周（W0–W36）。蓝条 = 该书写进每周计划的时间跨度 —— 计划 59 周次，8 本书均已读完（用户确认，2026-09-09）；条越长 = 战线拉得越长。</div>
+    <div class="gantt">
+      <div class="g-row"><div class="bar" style="left:0.00%;width:72.97%">智能简史</div></div><div class="g-row"><div class="bar" style="left:8.11%;width:16.22%">反脆弱</div><div class="bar" style="left:72.97%;width:24.32%">反脆弱</div></div><div class="g-row"><div class="bar" style="left:32.43%;width:16.22%">蛤蟆先生看医生</div></div><div class="g-row"><div class="bar" style="left:5.41%;width:10.81%">洞察力的秘密</div></div><div class="g-row"><div class="bar" style="left:48.65%;width:8.11%">我的超级阿莫</div></div><div class="g-row"><div class="bar" style="left:75.68%;width:5.41%">因为独特</div></div><div class="g-row"><div class="bar" style="left:0.00%;width:5.41%">拐点</div></div><div class="g-row"><div class="bar" style="left:29.73%;width:2.70%">时间管理</div></div>
+      <div class="axis">
+        <span style="left:0%">W0</span><span style="left:5.4%">W2</span><span style="left:10.8%">W4</span>
+        <span style="left:16.2%">W6</span><span style="left:21.6%">W8</span><span style="left:27%">W10</span>
+        <span style="left:32.4%">W12</span><span style="left:37.8%">W14</span><span style="left:43.2%">W16</span>
+        <span style="left:48.6%">W18</span><span style="left:54%">W20</span><span style="left:59.4%">W22</span>
+        <span style="left:64.8%">W24</span><span style="left:70.2%">W26</span><span style="left:75.6%">W28</span>
+        <span style="left:81%">W30</span><span style="left:86.4%">W32</span><span style="left:91.8%">W34</span>
+        <span style="left:97.2%">W36</span>
+      </div>
+    </div>
+    <div class="legend-note">战线最长：《智能简史》W1–W27 连续 27 周、《反脆弱》W4–W36 两段共 14 周。跨度大不代表没读完 —— 8 本都已闭环，只是过程断断续续。</div>
+  </div>
+
+  <div class="card">
+    <h2>工作 · 耍手机 · wondering —— 每周消耗（堆叠）与三项日均（折线）</h2>
+    <div class="hint">柱 = 每周总分钟（左轴）；灰虚线 = 三项合计 ÷ 7 的日均分钟（右轴）。高柱集中的周 = 出差/赶项目周。</div>
+    <div class="g-chart"><canvas id="cWPW"></canvas></div>
+  </div>
+
+  <div class="card">
+    <h2>陪娃时间 · 每周柱状（汤圆 + 樱桃）</h2>
+    <div class="hint">含陪玩/接送/哄睡/喂饭等照护；带娃就医与家长会不在此列。峰值周 = 开学/假期周。</div>
+    <div class="g-chart"><canvas id="cChild"></canvas></div>
+  </div>
+
+  <div class="grid2">
+    <div class="card">
+      <h2>运动 · 计划次数 vs 手记实做</h2>
+      <div class="hint">拉伸/引体按“出现天数”（目标=每天），其余按次数。真实跑步仅 6 次、深蹲 1 次。</div>
+      <table class="small">
+        <tr><th>项目</th><th>OKR 目标(36周)</th><th>实做</th><th>完成</th><th style="width:34%"></th></tr>
+        <tr><td>拉伸</td><td>246 天</td><td>182 天</td><td>74%</td><td><div class="pctwrap"><div class="pct" style="width:74%;background:#7bd88f"></div></div></td></tr>
+        <tr><td>引体向上</td><td>246 天</td><td>137 天</td><td>56%</td><td><div class="pctwrap"><div class="pct" style="width:56%;background:#b9a7ff"></div></div></td></tr>
+        <tr><td>跑步</td><td>36 次</td><td>6 次</td><td>17%</td><td><div class="pctwrap"><div class="pct" style="width:17%;background:#ffb454"></div></div></td></tr>
+        <tr><td>腹肌轮</td><td>72 次</td><td>6 次</td><td>8%</td><td><div class="pctwrap"><div class="pct" style="width:8%;background:#ff7a7a"></div></div></td></tr>
+        <tr><td>深蹲</td><td>72 次</td><td>1 次</td><td>1%</td><td><div class="pctwrap"><div class="pct" style="width:2%;background:#ff7a7a"></div></div></td></tr>
+      </table>
+      <div class="legend-note">跑步 6 次全部集中在 3/2–4/15（第 9–15 周），之后 21 周为零；深蹲全年仅 8/13 一次（20 个）。拉伸/引体按出现天数计。</div>
+    </div>
+    <div class="card">
+      <h2>差距分析 · 一句话结论</h2>
+      <div class="verdict good"><b>冥想：赢了。</b>完成率约 89%，是唯一被长期坚持的计划。缺的 11% 大多在旅行/生病/娃夜醒的日子 —— 不需要改进，只需要别加码。</div>
+      <div class="verdict good"><b>看书：目标达成 ✅</b>计划书单 8 本全部读完（用户确认）；41.1h/39 天有记录，周总结缺进度记录、过程断断续续，但结果闭环了。</div>
+      <div class="verdict"><b>运动：结构性偏科。</b>拉伸/引体这种“起床就能做”的微习惯坚持得好（74%/56%），跑步/深蹲/腹肌轮这种需要单独安排的，几乎全线缺席 —— 不是懒，是它们没有被嵌进日常流程。</div>
+      <div class="verdict"><b>自己事：</b>无目标、27.4h，是生活行政层，暂不动它。</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>接下来怎么做（按优先级）</h2>
+    <div class="todo">
+      <h3>P0 · 阅读：8 本已闭环，别让节奏断掉</h3>
+      <ul>
+        <li>W36 新书单已列好（未来四周 1.5 本/周）——<b>从最薄的一本开始</b>，《反脆弱》那种 8 个月战线的教训是：战线越长越容易中途断，换书要趁热；</li>
+        <li>继续保持“每天 50 页”的底限，睡前 10 页也行 —— 目标是让阅读回到每周都有进度的轨道。</li>
+      </ul>
+    </div>
+    <div class="todo">
+      <h3>P1 · 运动：把两件缺席的事嵌进已有习惯</h3>
+      <ul>
+        <li><b>跑步</b>：改成“周六早 20min 起”，前一晚把鞋放门口 —— 你过去 6 次跑步全在周末上午，说明只有整块时间可行；</li>
+        <li><b>深蹲</b>：不再单独安排，直接写进每天拉伸后“深蹲 50 个（约 3 分钟）”，手记模板改成“拉伸+深蹲”连写，做完打勾。</li>
+      </ul>
+    </div>
+    <div class="todo">
+      <h3>P2 · 系统：让复盘变成 10 秒</h3>
+      <ul>
+        <li>手记模板末尾加一行：<b>“执行：冥想__min 跑步__ 深蹲__ 看书__页”</b> —— 只填数字，不写感想；</li>
+        <li>每周日晚用这个 dashboard 看 3 分钟：哪一周塌了，塌的那天发生了什么（通常写得出来）。</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer">数据源：Apple 手记 2026 导出（247 个内容日，正文日期为准）｜抽取与复核脚本 step1–8｜冥想/工作/陪娃对账与人工统计一致（8/31–9/6：冥想 234min、工作 690min、陪娃 1510min）｜陪娃口径：陪玩/接送/哄睡/喂饭等照护，不含带娃就医与家长会；“工作时间”= 日记明记的处理工作/开会/客户/邮件等块，不含坐班默认时段</div>
+</div>
+
+<script>
+const LABELS = ["W0 1月", "W1 1月", "W2 1月", "W3 1月", "W4 1月", "W5 2月", "W6 2月", "W7 2月", "W8 2月", "W9 3月", "W10 3月", "W11 3月", "W12 3月", "W13 3月", "W14 4月", "W15 4月", "W16 4月", "W17 4月", "W18 5月", "W19 5月", "W20 5月", "W21 5月", "W22 6月", "W23 6月", "W24 6月", "W25 6月", "W26 6月", "W27 7月", "W28 7月", "W29 7月", "W30 7月", "W31 8月", "W32 8月", "W33 8月", "W34 8月", "W35 8月", "W36 9月"];
+const SERIES = {"运动": [13, 146, 50, 31, 56, 27, 34, 40, 47, 140, 72, 43, 95, 128, 29, 138, 41, 57, 40, 28, 87, 28, 103, 188, 29, 150, 70, 98, 87, 92, 82, 179, 149, 42, 120, 16, 0], "看书": [0, 30, 135, 370, 150, 125, 60, 0, 0, 40, 80, 100, 50, 140, 100, 30, 0, 120, 0, 90, 120, 0, 0, 0, 40, 0, 60, 150, 0, 190, 135, 0, 30, 0, 0, 120, 0], "冥想": [88, 301, 225, 219, 252, 261, 232, 237, 166, 353, 237, 264, 180, 326, 235, 240, 221, 272, 286, 265, 316, 245, 246, 270, 246, 135, 265, 252, 287, 230, 200, 304, 178, 210, 287, 254, 0], "自己事": [0, 0, 0, 30, 0, 0, 30, 0, 0, 0, 0, 0, 30, 90, 60, 50, 0, 30, 0, 0, 60, 120, 75, 90, 0, 0, 30, 60, 30, 60, 120, 0, 30, 330, 0, 320, 0]};
+const WEEKLAB = ["W0 01/01", "W1 01/04", "W2 01/12", "W3 01/18", "W4 01/26", "W5 02/02", "W6 02/09", "W7 02/16", "W8 02/23", "W9 03/01", "W10 03/08", "W11 03/16", "W12 03/23", "W13 03/29", "W14 04/07", "W15 04/13", "W16 04/20", "W17 04/26", "W18 05/03", "W19 05/10", "W20 05/17", "W21 05/25", "W22 06/01", "W23 06/08", "W24 06/15", "W25 06/22", "W26 06/29", "W27 07/07", "W28 07/13", "W29 07/20", "W30 07/26", "W31 08/02", "W32 08/09", "W33 08/16", "W34 08/23", "W35 08/30", "W36 09/08"];
+const WPW = {"工作": [130, 640, 630, 1375, 1530, 180, 170, 0, 120, 860, 900, 660, 270, 630, 550, 1410, 660, 270, 0, 930, 695, 920, 660, 485, 480, 0, 1080, 1090, 990, 360, 945, 450, 510, 560, 360, 690, 0], "耍手机": [160, 570, 740, 690, 435, 340, 270, 420, 120, 660, 320, 150, 320, 860, 630, 205, 540, 630, 280, 210, 460, 265, 180, 500, 120, 0, 40, 145, 0, 0, 380, 45, 320, 460, 150, 440, 0], "wondering": [0, 30, 110, 0, 0, 120, 60, 0, 0, 0, 0, 30, 0, 0, 0, 60, 30, 0, 0, 0, 0, 0, 0, 0, 0, 120, 0, 0, 0, 0, 60, 0, 0, 20, 0, 0, 0]};
+const CHILD = [60, 410, 90, 30, 460, 420, 400, 380, 120, 310, 300, 540, 570, 630, 460, 580, 320, 180, 0, 555, 780, 760, 1080, 690, 330, 0, 460, 200, 495, 300, 450, 390, 300, 225, 570, 1540, 0];
+const WHERE = [["有效·887h", 53245], ["白耗·212h", 12695], ["睡眠(估)·1792h", 107537], ["生活未细分·3013h", 180763]];
+Chart.defaults.color = '#b8b8c6';
+Chart.defaults.font.family = "-apple-system,'PingFang SC',sans-serif";
+Chart.defaults.borderColor = 'rgba(255,255,255,.06)';
+
+// 0) 半年时间去向 doughnut
+new Chart(document.getElementById('cWhere'), {
+  type: 'doughnut',
+  data: { labels: WHERE.map(w=>w[0]), datasets: [{ data: WHERE.map(w=>w[1]),
+    backgroundColor: ['#43c9a7','#ff8f8f','#5b7fd4','#3a3a46'], borderColor:'#17171f', borderWidth:3 }]},
+  options: { responsive:true, maintainAspectRatio:false, cutout:'62%',
+    plugins: { legend:{position:'bottom', labels:{boxWidth:10, font:{size:11}, padding:10}},
+      tooltip:{callbacks:{label:(c)=>' '+c.label+' '+(c.parsed/60).toFixed(0)+'h ('+(c.parsed/354240*100).toFixed(0)+'%)'}} } }
+});
+
+// 1) stacked weekly
+new Chart(document.getElementById('cTrend'), {
+  type: 'bar',
+  data: { labels: LABELS, datasets: [
+    {label:'冥想', data:SERIES['冥想'], backgroundColor:'#8b7cf6'},
+    {label:'运动', data:SERIES['运动'], backgroundColor:'#4cc9f0'},
+    {label:'看书', data:SERIES['看书'], backgroundColor:'#ff9f43'},
+    {label:'自己事', data:SERIES['自己事'], backgroundColor:'#43aa8b'},
+  ]},
+  options: { responsive:true, maintainAspectRatio:false,
+    scales: { x:{ stacked:true, grid:{display:false}, ticks:{maxTicksLimit:14, font:{size:10}} },
+              y:{ stacked:true, title:{display:true, text:'分钟 / 周'}, ticks:{font:{size:10}} } },
+    plugins: { legend:{labels:{boxWidth:10, font:{size:11}}},
+               tooltip:{mode:'index', intersect:false} } }
+});
+
+// 2) meditation vs target
+const medPct = SERIES['冥想'].map(v => (v/280*100).toFixed(0));
+new Chart(document.getElementById('cMed'), {
+  type: 'bar',
+  data: { labels: LABELS, datasets: [
+    {label:'实测冥想(min)', data:SERIES['冥想'], backgroundColor:'#8b7cf6', order:2},
+    {label:'OKR目标 280min/周', data:Array(LABELS.length).fill(280), type:'line',
+     borderColor:'rgba(255,255,255,.45)', borderDash:[5,4], borderWidth:1.5, pointRadius:0, fill:false, order:0},
+    {label:'周完成率 %', data:medPct, type:'line', borderColor:'#7bd88f', backgroundColor:'#7bd88f', pointRadius:2, borderWidth:1.5, yAxisID:'y2', order:1},
+  ]},
+  options: { responsive:true, maintainAspectRatio:false,
+    scales: { x:{grid:{display:false}, ticks:{maxTicksLimit:10, font:{size:9}}},
+              y:{position:'left', title:{display:true,text:'min'}, ticks:{font:{size:9}}, suggestedMax:400},
+              y2:{position:'right', min:0, max:150, grid:{drawOnChartArea:false}, ticks:{font:{size:9}, callback:v=>v+'%'}} },
+    plugins: { legend:{labels:{boxWidth:10, font:{size:11}}},
+      tooltip:{mode:'index', intersect:false} } }
+});
+
+// 3) reading weekly + plan band highlight handled by gantt below
+new Chart(document.getElementById('cRead'), {
+  type: 'bar',
+  data: { labels: LABELS, datasets: [
+    {label:'看书(min)', data:SERIES['看书'], backgroundColor:'#ff9f43', borderRadius:3},
+  ]},
+  options: { responsive:true, maintainAspectRatio:false,
+    scales: { x:{grid:{display:false}, ticks:{maxTicksLimit:10, font:{size:9}}},
+              y:{beginAtZero:true, title:{display:true,text:'min'}, ticks:{font:{size:9}}} },
+    plugins: { legend:{display:false},
+      tooltip:{callbacks:{title:(t)=>WEEKLAB[t[0].dataIndex]}} } }
+});
+
+// 4) work / phone / wondering stacked + daily-avg line
+const wpwSum = WPW['工作'].map((v,i)=>v+WPW['耍手机'][i]+WPW['wondering'][i]);
+const wpwDaily = wpwSum.map(v=>(v/7).toFixed(0));
+new Chart(document.getElementById('cWPW'), {
+  type: 'bar',
+  data: { labels: LABELS, datasets: [
+    {label:'工作', data:WPW['工作'], backgroundColor:'#6d8df0', stack:'w'},
+    {label:'耍手机·屏幕娱乐', data:WPW['耍手机'], backgroundColor:'#ff8f8f', stack:'w'},
+    {label:'wondering', data:WPW['wondering'], backgroundColor:'#b9a7ff', stack:'w'},
+    {label:'三项日均(min/天)', data:wpwDaily, type:'line', borderColor:'rgba(255,255,255,.65)',
+     backgroundColor:'rgba(255,255,255,.65)', borderDash:[6,4], pointRadius:0, borderWidth:1.5,
+     yAxisID:'y2', order:0, spanGaps:true},
+  ]},
+  options: { responsive:true, maintainAspectRatio:false,
+    scales: { x:{stacked:true, grid:{display:false}, ticks:{maxTicksLimit:14, font:{size:10}}},
+              y:{stacked:true, position:'left', title:{display:true, text:'分钟 / 周'}, ticks:{font:{size:10}}},
+              y2:{position:'right', min:0, grid:{drawOnChartArea:false},
+                  title:{display:true, text:'日均 min/天'}, ticks:{font:{size:10}}} },
+    plugins: { legend:{labels:{boxWidth:10, font:{size:11}}},
+               tooltip:{mode:'index', intersect:false, callbacks:{title:(t)=>WEEKLAB[t[0].dataIndex]}} } }
+});
+
+// 5) child-care weekly bars
+new Chart(document.getElementById('cChild'), {
+  type: 'bar',
+  data: { labels: LABELS, datasets: [
+    {label:'陪娃(min)', data:CHILD, backgroundColor:'#43c9a7', borderRadius:3},
+  ]},
+  options: { responsive:true, maintainAspectRatio:false,
+    scales: { x:{grid:{display:false}, ticks:{maxTicksLimit:14, font:{size:10}}},
+              y:{beginAtZero:true, title:{display:true, text:'分钟 / 周'}, ticks:{font:{size:10}}} },
+    plugins: { legend:{display:false},
+      tooltip:{callbacks:{title:(t)=>WEEKLAB[t[0].dataIndex],
+        afterLabel:(c)=>'≈ '+(c.parsed.y/7).toFixed(0)+' min/天'}} } }
+});
+</script>
+</body>
+</html>
