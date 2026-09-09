@@ -3,45 +3,45 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
 <style>
 * { margin:0; padding:0; box-sizing:border-box; }
-body { background:#fff; color:#222; font-family:-apple-system,'PingFang SC','Microsoft YaHei',sans-serif; font-size:13px; line-height:1.6; }
-.page { width: 794px; min-height: 1112px; margin: 0 auto; padding: 34px 46px 20px; position: relative; page-break-after: always; }
+body { background:#0e0e13; color:#d8d8e2; font-family:-apple-system,'PingFang SC','Microsoft YaHei',sans-serif; font-size:13px; line-height:1.6; }
+.page { width: 794px; min-height: 1112px; margin: 0 auto; padding: 34px 46px 20px; position: relative; page-break-after: always; background:#0e0e13; }
 @media print { body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
   .page { min-height: 0; page-break-after: always; margin: 0; padding: 18px 20px; }
   .card, .box, .two, h2, h3 { page-break-inside: avoid; }
   .chart { page-break-inside: avoid; } tr { page-break-inside: avoid; } }
-a { color:#4a6dd4; text-decoration:none; }
-.nav { position:sticky; top:0; background:#fff; border-bottom:1px solid #eee; padding:8px 0; margin-bottom:14px; z-index:5; display:flex; gap:6px; flex-wrap:wrap; font-size:12px; }
-.nav a { border:1px solid #ddd; border-radius:14px; padding:2px 11px; color:#555; background:#fafafa; }
-.nav a:hover { border-color:#4a6dd4; color:#4a6dd4; }
-h1 { font-size:21px; letter-spacing:.3px; }
-.sub { color:#777; font-size:12px; margin:4px 0 12px; }
-h2 { font-size:15.5px; margin:4px 0 6px; color:#111; border-left:4px solid #7c6cf0; padding-left:8px; }
-h2.g { border-color:#35b58a; } h2.o { border-color:#f59f3c; } h2.b { border-color:#4a6dd4; }
-h3 { font-size:13.5px; margin:10px 0 4px; color:#111; }
-p { margin:5px 0; color:#333; }
-.dim { color:#888; font-size:12px; }
-b.k { color:#111; }
+a { color:#8ab0ff; text-decoration:none; }
+.nav { position:sticky; top:0; background:#0e0e13; border-bottom:1px solid #26262f; padding:8px 0; margin-bottom:14px; z-index:5; display:flex; gap:6px; flex-wrap:wrap; font-size:12px; }
+.nav a { border:1px solid #33333f; border-radius:14px; padding:2px 11px; color:#b6b6c4; background:#17171f; }
+.nav a:hover { border-color:#8ab0ff; color:#8ab0ff; }
+h1 { font-size:21px; letter-spacing:.3px; color:#fff; }
+.sub { color:#8b8b98; font-size:12px; margin:4px 0 12px; }
+h2 { font-size:15.5px; margin:4px 0 6px; color:#fff; border-left:4px solid #a58ef7; padding-left:8px; }
+h2.g { border-color:#43c9a7; } h2.o { border-color:#ffb454; } h2.b { border-color:#7d9bf2; }
+h3 { font-size:13.5px; margin:10px 0 4px; color:#fff; }
+p { margin:5px 0; color:#c9c9d4; }
+.dim { color:#8b8b98; font-size:12px; }
+b.k { color:#fff; }
 .kpis { display:grid; grid-template-columns:repeat(4, 1fr); gap:8px; margin:10px 0; }
-.kpi { border:1px solid #e4e4ea; border-radius:10px; padding:9px 11px; background:#fbfbfd; }
-.kpi .k { font-size:11px; color:#888; }
-.kpi .v { font-size:22px; font-weight:700; color:#111; line-height:1.25; }
-.kpi .d { font-size:11px; color:#666; }
-.card { border:1px solid #e4e4ea; border-radius:10px; padding:12px 15px; margin:10px 0; background:#fbfbfd; }
-.box { border:1px solid #d9eadf; background:#f2faf5; border-radius:8px; padding:9px 13px; margin:8px 0; font-size:12.5px; }
-.box.warn { border-color:#f3d9d9; background:#fdf3f3; }
-.box.blue { border-color:#d7def5; background:#f4f6fd; }
+.kpi { border:1px solid #26262f; border-radius:10px; padding:9px 11px; background:#15151c; }
+.kpi .k { font-size:11px; color:#8b8b98; }
+.kpi .v { font-size:22px; font-weight:700; color:#fff; line-height:1.25; }
+.kpi .d { font-size:11px; color:#a0a0ac; }
+.card { border:1px solid #26262f; border-radius:10px; padding:12px 15px; margin:10px 0; background:#15151c; }
+.box { border:1px solid #1e3b2e; background:#12231b; border-radius:8px; padding:9px 13px; margin:8px 0; font-size:12.5px; color:#bfe6d2; }
+.box.warn { border-color:#4a2a2a; background:#251a1a; color:#f0c9c9; }
+.box.blue { border-color:#26365e; background:#182034; color:#c6d4f5; }
 .chart { position:relative; height:220px; margin:6px 0; }
 .chart.tall { height:250px; }
 .chart.sm { height:170px; }
 table { border-collapse:collapse; width:100%; font-size:11.5px; margin:6px 0; }
-th, td { border:1px solid #e4e4ea; padding:2px 5px; text-align:right; font-size:10.5px; }
-th { background:#f3f3f7; color:#555; font-weight:600; }
+th, td { border:1px solid #26262f; padding:2px 5px; text-align:right; font-size:10.5px; color:#c4c4cf; }
+th { background:#1d1d26; color:#9a9aa6; font-weight:600; }
 td:first-child, th:first-child { text-align:left; }
-tr:nth-child(even) td { background:#fafafd; }
+tr:nth-child(even) td { background:#13131a; }
 .two { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
-.foot { color:#aaa; font-size:10px; border-top:1px solid #eee; padding-top:4px; margin-top:14px; display:flex; justify-content:space-between; }
+.foot { color:#5f5f6d; font-size:10px; border-top:1px solid #22222b; padding-top:4px; margin-top:14px; display:flex; justify-content:space-between; }
 .tag { display:inline-block; padding:0 7px; border-radius:10px; font-size:11px; margin-right:4px; }
-.ok { background:#e5f6ec; color:#1c7c43; } .no { background:#fdeaea; color:#c0392b; } .warn { background:#fff3e0; color:#b26a00; } .info { background:#e8eefb; color:#2f55b8; }
+.ok { background:#16301f; color:#7bd88f; } .no { background:#3a1d1d; color:#ff8f8f; } .warn { background:#3a2a12; color:#ffc46b; } .info { background:#1c2740; color:#8ab0ff; }
 .glist { margin:4px 0 4px 18px; } .glist li { margin:3px 0; }
 .pb { display:none; }
 @media print { .pb { display:block; page-break-before: always; } }
@@ -53,7 +53,7 @@ tr:nth-child(even) td { background:#fafafd; }
 </div>
 <h1 id="top">🧘 OKR「走向觉知之路」执行看板 <span style="font-weight:400;font-size:15px;color:#555;">v2（2026-09-09 更新）</span></h1>
 <div class="sub">阅读 · 冥想 · 锻炼 · 自己事 + 工作 / 刷手机 / 陪娃 ｜ 2026 W1(01-04) – W36(09-08)，手记数据截至 09-06</div>
-<div class="sub">数据源：周计划卡片 W1–W36 + Apple 手记 2026 逐日实测（247 个内容日，人工复核）｜生成于 2026/09/09 13:29</div>
+<div class="sub">数据源：周计划卡片 W1–W36 + Apple 手记 2026 逐日实测（247 个内容日，人工复核）｜生成于 2026/09/09 14:13</div>
 
 <div class="card">
 <b class="k">关键指标总览</b>
@@ -86,7 +86,7 @@ tr:nth-child(even) td { background:#fafafd; }
 <p>补差成本极低：缺口 ≈ 21.6h，摊到 246 天只差每天 5.3 分钟。把 40 分钟一次性时段改为「早晨固定 35 分钟 + 睡前补 5–10 分钟」即可填平。</p>
 </div></div>
 <div class="box warn"><b>一个隐患：</b>W5–W13 周总结连续出现「40×7 基本完成」复制模板（含“过年放假！”残留），真实性存疑；真实可信的只有 W1/W2/W4 的 790 分钟。</div>
-<div class="foot"><span>OKR 走向觉知之路 · 执行看板 v2</span><span>2026/09/09 13:29</span><span>1 / 5</span></div>
+<div class="foot"><span>OKR 走向觉知之路 · 执行看板 v2</span><span>2026/09/09 14:13</span><span>1 / 5</span></div>
 </div>
 
 <div class="page">
@@ -117,7 +117,7 @@ tr:nth-child(even) td { background:#fafafd; }
 <p>差距本质：真正的“能力动作”长期缺位，被“每天都做但低强度”的拉伸替代。</p>
 <p><span class="tag ok">好消息</span>35 / 36 周都有身体活动记录，“每周动”这个底层习惯已很牢固，只差把动作换成计划要求的跑步 + 力量。</p>
 </div></div>
-<div class="foot"><span>OKR 走向觉知之路 · 执行看板 v2</span><span>2026/09/09 13:29</span><span>2 / 5</span></div>
+<div class="foot"><span>OKR 走向觉知之路 · 执行看板 v2</span><span>2026/09/09 14:13</span><span>2 / 5</span></div>
 </div>
 
 <div class="page">
@@ -164,7 +164,7 @@ tr:nth-child(even) td { background:#fafafd; }
 </table>
 <div class="box"><b>✅ 已形成的资产：</b>冥想年度级习惯（87%）；每周动一动 35 周不间断；手记记录 246/250 天，自我追踪能力很强；8 本书读完。</div>
 <div class="box warn"><b>⚠️ 正在退化的：</b>周总结 17 周断档；锻炼被低强度稀释；阶段均值冥想 -2%、阅读（记录）腰斩。<b>❌ 断裂的系统：</b>“计划一套、手记一套”两套数据各自为政——下周日起，我们把它合成一套。</div>
-<div class="foot"><span>OKR 走向觉知之路 · 执行看板 v2</span><span>2026/09/09 13:29</span><span>3 / 5</span></div>
+<div class="foot"><span>OKR 走向觉知之路 · 执行看板 v2</span><span>2026/09/09 14:13</span><span>3 / 5</span></div>
 </div>
 
 <div class="page">
@@ -208,7 +208,7 @@ tr:nth-child(even) td { background:#fafafd; }
 <li>四类总时长 15,670 分钟（261.2h）含 W0 期前 3 天 101 分钟；冥想完成率 = 8,785 / (40×7×36) ≈ 87.2%。</li>
 <li>8 / 8 本书读完为用户 2026-09-09 确认（此前“0/8”因周总结无完成节点记录，已更正）。</li>
 </ul>
-<div class="foot"><span>OKR 走向觉知之路 · 执行看板 v2</span><span>2026/09/09 13:29</span><span>4 / 5</span></div>
+<div class="foot"><span>OKR 走向觉知之路 · 执行看板 v2</span><span>2026/09/09 14:13</span><span>4 / 5</span></div>
 </div>
 
 <div class="page">
@@ -300,11 +300,12 @@ tr:nth-child(even) td { background:#fafafd; }
 <div class="dim" style="margin-top:6px;">W0 = OKR 开始(01-04)前的 3 天；W36（09-08 起）手记数据截至 09-06，故为 0。完整逐日证据可回溯 shouji_2026_final_perday.json / wpw_perday.json / child_perday.json。</div>
 
 <div class="box" style="margin-top:14px;">本看板 v2 基于你现有的周计划统计表自动生成，建议每周日复盘后重新生成一次。有任何数字想逐条溯源，对应审计 JSON 都在项目目录里。</div>
-<div class="foot"><span>OKR 走向觉知之路 · 执行看板 v2</span><span>2026/09/09 13:29</span><span>5 / 5</span></div>
+<div class="foot"><span>OKR 走向觉知之路 · 执行看板 v2</span><span>2026/09/09 14:13</span><span>5 / 5</span></div>
 </div>
 
 <script>
-Chart.defaults.color = '#555'; Chart.defaults.font.family = "-apple-system,'PingFang SC',sans-serif";
+Chart.defaults.color = '#b8b8c4'; Chart.defaults.font.family = "-apple-system,'PingFang SC',sans-serif";
+Chart.defaults.borderColor = 'rgba(255,255,255,.12)';
 Chart.defaults.font.size = 11;
 const L = ["W0 1月", "W1 1月", "W2 1月", "W3 1月", "W4 1月", "W5 2月", "W6 2月", "W7 2月", "W8 2月", "W9 3月", "W10 3月", "W11 3月", "W12 3月", "W13 3月", "W14 4月", "W15 4月", "W16 4月", "W17 4月", "W18 5月", "W19 5月", "W20 5月", "W21 5月", "W22 6月", "W23 6月", "W24 6月", "W25 6月", "W26 6月", "W27 7月", "W28 7月", "W29 7月", "W30 7月", "W31 8月", "W32 8月", "W33 8月", "W34 8月", "W35 8月", "W36 9月"], W = ["W0 01/01", "W1 01/04", "W2 01/12", "W3 01/18", "W4 01/26", "W5 02/02", "W6 02/09", "W7 02/16", "W8 02/23", "W9 03/01", "W10 03/08", "W11 03/16", "W12 03/23", "W13 03/29", "W14 04/07", "W15 04/13", "W16 04/20", "W17 04/26", "W18 05/03", "W19 05/10", "W20 05/17", "W21 05/25", "W22 06/01", "W23 06/08", "W24 06/15", "W25 06/22", "W26 06/29", "W27 07/07", "W28 07/13", "W29 07/20", "W30 07/26", "W31 08/02", "W32 08/09", "W33 08/16", "W34 08/23", "W35 08/30", "W36 09/08"];
 const S4 = {"运动": [13, 146, 50, 31, 56, 27, 34, 40, 47, 140, 72, 43, 95, 128, 29, 138, 41, 57, 40, 28, 87, 28, 103, 188, 29, 150, 70, 98, 87, 92, 82, 179, 149, 42, 120, 16, 0], "看书": [0, 30, 135, 370, 150, 125, 60, 0, 0, 40, 80, 100, 50, 140, 100, 30, 0, 120, 0, 90, 120, 0, 0, 0, 40, 0, 60, 150, 0, 190, 135, 0, 30, 0, 0, 120, 0], "冥想": [88, 301, 225, 219, 252, 261, 232, 237, 166, 353, 237, 264, 180, 326, 235, 240, 221, 272, 286, 265, 316, 245, 246, 270, 246, 135, 265, 252, 287, 230, 200, 304, 178, 210, 287, 254, 0], "自己事": [0, 0, 0, 30, 0, 0, 30, 0, 0, 0, 0, 0, 30, 90, 60, 50, 0, 30, 0, 0, 60, 120, 75, 90, 0, 0, 30, 60, 30, 60, 120, 0, 30, 330, 0, 320, 0]}, S3 = {"工作": [130, 640, 630, 1375, 1530, 180, 170, 0, 120, 860, 900, 660, 270, 630, 550, 1410, 660, 270, 0, 930, 695, 920, 660, 485, 480, 0, 1080, 1090, 990, 360, 945, 450, 510, 560, 360, 690, 0], "耍手机": [160, 570, 740, 690, 435, 340, 270, 420, 120, 660, 320, 150, 320, 860, 630, 205, 540, 630, 280, 210, 460, 265, 180, 500, 120, 0, 40, 145, 0, 0, 380, 45, 320, 460, 150, 440, 0], "wondering": [0, 30, 110, 0, 0, 120, 60, 0, 0, 0, 0, 30, 0, 0, 0, 60, 30, 0, 0, 0, 0, 0, 0, 0, 0, 120, 0, 0, 0, 0, 60, 0, 0, 20, 0, 0, 0]}, CH = [60, 410, 90, 30, 460, 420, 400, 380, 120, 310, 300, 540, 570, 630, 460, 580, 320, 180, 0, 555, 780, 760, 1080, 690, 330, 0, 460, 200, 495, 300, 450, 390, 300, 225, 570, 1540, 0];
@@ -341,8 +342,8 @@ const gg = document.getElementById('cGantt'); gg.style.display='none';
 const gc = document.createElement('div'); gc.style.fontSize='11px';
 gantt.labels.forEach((nm,ri)=>{
   const row=document.createElement('div'); row.style.cssText='display:flex;align-items:center;height:20px;';
-  const lb=document.createElement('div'); lb.style.cssText='width:96px;color:#888;flex:0 0 96px;'; lb.textContent=nm;
-  const tr=document.createElement('div'); tr.style.cssText='position:relative;flex:1;border-bottom:1px dashed #eee;height:20px;';
+  const lb=document.createElement('div'); lb.style.cssText='width:96px;color:#9a9aa6;flex:0 0 96px;'; lb.textContent=nm;
+  const tr=document.createElement('div'); tr.style.cssText='position:relative;flex:1;border-bottom:1px dashed #2c2c36;height:20px;';
   for(let i=0;i<gantt.spans[ri].length;i+=2){
     const a=gantt.spans[ri][i], b=gantt.spans[ri][i+1];
     const bar=document.createElement('div');
@@ -360,7 +361,7 @@ new Chart(document.getElementById('cEx'), { type:'bar',
 // 时间去向
 const WH = [["有效·887h", 53245], ["白耗·212h", 12695], ["睡眠(8h/天)·1968h", 118080], ["生活未细分·2837h", 170220]];
 new Chart(document.getElementById('cWhere'), { type:'doughnut',
-  data:{ labels:WH.map(x=>x[0]), datasets:[{data:WH.map(x=>x[1]),backgroundColor:['#7bd8ae','#ef8f8f','#9db4e8','#d9d9e3'],borderColor:'#fff',borderWidth:2}]},
+  data:{ labels:WH.map(x=>x[0]), datasets:[{data:WH.map(x=>x[1]),backgroundColor:['#43c9a7','#ef6a6a','#5b7fd4','#3a3a46'],borderColor:'#0e0e13',borderWidth:2}]},
   options:{ responsive:true,maintainAspectRatio:false,cutout:'58%',devicePixelRatio:2,
     plugins:{ legend:{position:'bottom',labels:{boxWidth:9,font:{size:10}}},
       tooltip:{callbacks:{label:(c)=>' '+c.label+': '+(c.parsed/60).toFixed(0)+'h ('+(c.parsed/354240*100).toFixed(0)+'%)'}} } } });
